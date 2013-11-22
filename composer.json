@@ -1,0 +1,28 @@
+{
+    "name": "giantbomb/giantbomb-php-api"
+    "description": "A PHP library for interacting with the GiantBomb API",
+    "type": "library",
+    "license": "Apache v2"
+    "keywords": [
+        "giantbomb"
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "guzzle/guzzle": "~3.7"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    },
+    "homepage": "http://www.giantbomb.com/api/",
+    "authors": [
+        {
+            "name": "Aaron Scherer",
+            "email": "aequasi@gmail.com"
+        }		
+    ],
+    "autoload": {
+        "psr-0": {
+            "GiantBomb": "src/"
+        }
+    }
+}

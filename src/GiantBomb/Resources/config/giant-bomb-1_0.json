@@ -1,0 +1,21 @@
+{
+	"operations": {
+		"getAccessory": {
+			"uri": "/accessory",
+			"summary": "Returns a specific accessory.",
+			"httpMethod": "GET",
+			"parameters": {
+				"apiKey": {
+					"location": "uri",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "uri",
+					"required": true,
+					"static": true
+				}
+			}
+		}
+	}
+}
