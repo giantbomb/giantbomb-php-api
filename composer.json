@@ -2,7 +2,7 @@
     "name": "giantbomb/giantbomb-php-api",
     "description": "A PHP library for interacting with the GiantBomb API",
     "type": "library",
-    "license": "Apache v2"
+    "license": "Apache v2",
     "keywords": [
         "giantbomb"
     ],
