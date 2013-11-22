@@ -1,8 +1,8 @@
 {
 	"operations": {
-		"getAccessory": {
-			"uri": "/accessory",
-			"summary": "Returns a specific accessory.",
+		"getAccessories": {
+			"uri": "/accessories",
+			"summary": "Returns a list of accessories.",
 			"httpMethod": "GET",
 			"parameters": {
 				"apiKey": {
