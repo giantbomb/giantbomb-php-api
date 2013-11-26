@@ -4,6 +4,7 @@ namespace GiantBomb\Client;
 
 use Guzzle\Common\Collection;
 use Guzzle\Service\Client;
+use Guzzle\Service\ClientInterface;
 use Guzzle\Service\Description\ServiceDescription;
 
 /**
@@ -11,7 +12,7 @@ use Guzzle\Service\Description\ServiceDescription;
  *
  * @package GiantBomb\Client
  */
-class GiantBombClient extends Client
+class GiantBombClient extends Client implements ClientInterface
 {
 	/**
 	 * Factory to create new GiantBombClient instance.
@@ -22,7 +23,14 @@ class GiantBombClient extends Client
 	 */
 	public static function factory( $config = array() )
 	{
-		$default = array( 'baseUrl' => "https://www.giantbomb.com/api/", 'version' => '1.0', 'apiKey' => null, 'format' => 'json' );
+		$default = array(
+			'baseUrl' => "http://www.giantbomb.com/",
+			'version' => '1.0',
+			'apiKey'  => null,
+			'format'  => 'json',
+			'limit'   => 100,
+			'offset'  => 0
+		);
 
 		// Validate the configuration options
 		self::validateConfig( $config );
@@ -37,8 +45,20 @@ class GiantBombClient extends Client
 		$file = 'giant-bomb-' . str_replace( '.', '_', $client->getConfig( 'version' ) ) . '.json';
 		$client->setDescription( ServiceDescription::factory( __DIR__ . "/../Resources/config/{$file}" ) );
 
-		// Set the content type header to use "application/json" for all requests
-		$client->setDefaultOption( 'headers', array( 'Content-Type' => 'application/json' ) );
+
+		$parameters = array();
+		foreach( array( 'apiKey', 'format' ) as $key ) {
+			$parameters[ $key ] = $config->get( $key );
+		}
+		$config->set( 'command.params', $parameters );
+
+		$client->setDefaultOption( 'query', array(
+				'api_key' => $config->get( 'apiKey' ),
+				'format'  => $config->get( 'format' ),
+				'limit'   => $config->get( 'limit' ),
+				'offset'  => $config->get( 'offset' )
+			)
+		);
 
 		return $client;
 	}

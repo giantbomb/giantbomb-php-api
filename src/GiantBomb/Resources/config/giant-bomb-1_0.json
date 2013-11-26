@@ -1,19 +1,1418 @@
 {
 	"operations": {
 		"getAccessories": {
-			"uri": "/accessories",
+			"uri": "/api/accessories/",
 			"summary": "Returns a list of accessories.",
 			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\ListingModel",
 			"parameters": {
 				"apiKey": {
-					"location": "uri",
+					"location": "query",
 					"required": true,
 					"static": true
 				},
 				"format": {
-					"location": "uri",
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"field_list": {
+					"location": "query"
+				},
+				"sort": {
+					"location": "query"
+				},
+				"filter": {
+					"location": "query"
+				}
+			}
+		},
+		"getAccessory": {
+			"uri": "/api/accessory/{id}/",
+			"summary": "Returns a specific accessory.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\SingleModel",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
 					"required": true,
 					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"id": {
+					"location": "uri",
+					"required": true
+				},
+				"field_list": {
+					"location": "query"
+				}
+			}
+		},
+		"getCharacters": {
+			"uri": "/api/characters/",
+			"summary": "Returns a list of characters.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\ListingModel",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"field_list": {
+					"location": "query"
+				},
+				"sort": {
+					"location": "query"
+				},
+				"filter": {
+					"location": "query"
+				}
+			}
+		},
+		"getCharacter": {
+			"uri": "/api/character/{id}/",
+			"summary": "Returns a specific character.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\SingleModel",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"id": {
+					"location": "uri",
+					"required": true
+				},
+				"field_list": {
+					"location": "query"
+				}
+			}
+		},
+		"getChats": {
+			"uri": "/api/chats/",
+			"summary": "Returns a list of chats.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\ListingModel",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"field_list": {
+					"location": "query"
+				},
+				"sort": {
+					"location": "query"
+				},
+				"filter": {
+					"location": "query"
+				}
+			}
+		},
+		"getChat": {
+			"uri": "/api/chat/{id}/",
+			"summary": "Returns a specific chat.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\SingleModel",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"id": {
+					"location": "uri",
+					"required": true
+				},
+				"field_list": {
+					"location": "query"
+				}
+			}
+		},
+		"getCompanies": {
+			"uri": "/api/companies/",
+			"summary": "Returns a list of companies.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\ListingModel",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"field_list": {
+					"location": "query"
+				},
+				"sort": {
+					"location": "query"
+				},
+				"filter": {
+					"location": "query"
+				}
+			}
+		},
+		"getCompany": {
+			"uri": "/api/company/{id}/",
+			"summary": "Returns a specific company.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\SingleModel",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"id": {
+					"location": "uri",
+					"required": true
+				},
+				"field_list": {
+					"location": "query"
+				}
+			}
+		},
+		"getConcepts": {
+			"uri": "/api/concepts/",
+			"summary": "Returns a list of concepts.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\ListingModel",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"field_list": {
+					"location": "query"
+				},
+				"sort": {
+					"location": "query"
+				},
+				"filter": {
+					"location": "query"
+				}
+			}
+		},
+		"getConcept": {
+			"uri": "/api/concept/{id}/",
+			"summary": "Returns a specific concept.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\SingleModel",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"id": {
+					"location": "uri",
+					"required": true
+				},
+				"field_list": {
+					"location": "query"
+				}
+			}
+		},
+		"getFranchises": {
+			"uri": "/api/franchises/",
+			"summary": "Returns a list of franchises.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\ListingModel",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"field_list": {
+					"location": "query"
+				}
+			}
+		},
+		"getFranchise": {
+			"uri": "/api/franchise/{id}/",
+			"summary": "Returns a specific franchise.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\SingleModel",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"id": {
+					"location": "uri",
+					"required": true
+				},
+				"field_list": {
+					"location": "query"
+				}
+			}
+		},
+		"getGames": {
+			"uri": "/api/games/",
+			"summary": "Returns a list of games.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\ListingModel",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"field_list": {
+					"location": "query"
+				},
+				"sort": {
+					"location": "query"
+				},
+				"filter": {
+					"location": "query"
+				},
+				"platforms": {
+					"location": "query"
+				}
+			}
+		},
+		"getGame": {
+			"uri": "/api/game/{id}/",
+			"summary": "Returns a specific game.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\SingleModel",
+			"parameters": {
+				"id": {
+					"location": "uri",
+					"required": true
+				},
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"field_list": {
+					"location": "query"
+				}
+			}
+		},
+		"getGameRatings": {
+			"uri": "/api/game_ratings/",
+			"summary": "Returns a list of game ratings.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\ListingModel",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"field_list": {
+					"location": "query"
+				},
+				"sort": {
+					"location": "query"
+				},
+				"filter": {
+					"location": "query"
+				}
+			}
+		},
+		"getGameRating": {
+			"uri": "/api/game_rating/{id}/",
+			"summary": "Returns a specific game rating.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\SingleModel",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"id": {
+					"location": "uri",
+					"required": true
+				},
+				"field_list": {
+					"location": "query"
+				}
+			}
+		},
+		"getGenres": {
+			"uri": "/api/genres/",
+			"summary": "Returns a list of genres.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\ListingModel",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"field_list": {
+					"location": "query"
+				}
+			}
+		},
+		"getGenre": {
+			"uri": "/api/genre/{id}/",
+			"summary": "Returns a specific genre.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\SingleModel",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"id": {
+					"location": "uri",
+					"required": true
+				},
+				"field_list": {
+					"location": "query"
+				}
+			}
+		},
+		"getLocations": {
+			"uri": "/api/locations/",
+			"summary": "Returns a list of locations.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\ListingModel",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"field_list": {
+					"location": "query"
+				},
+				"sort": {
+					"location": "query"
+				},
+				"filter": {
+					"location": "query"
+				}
+			}
+		},
+		"getLocation": {
+			"uri": "/api/location/{id}/",
+			"summary": "Returns a specific location.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\SingleModel",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"id": {
+					"location": "uri",
+					"required": true
+				},
+				"field_list": {
+					"location": "query"
+				}
+			}
+		},
+		"getObjects": {
+			"uri": "/api/objects/",
+			"summary": "Returns a list of objects.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\ListingModel",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"field_list": {
+					"location": "query"
+				},
+				"sort": {
+					"location": "query"
+				},
+				"filter": {
+					"location": "query"
+				}
+			}
+		},
+		"getObject": {
+			"uri": "/api/object/{id}/",
+			"summary": "Returns a specific object.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\SingleModel",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"id": {
+					"location": "uri",
+					"required": true
+				},
+				"field_list": {
+					"location": "query"
+				}
+			}
+		},
+		"getPeople": {
+			"uri": "/api/people/",
+			"summary": "Returns a list of people.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\ListingModel",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"field_list": {
+					"location": "query"
+				},
+				"sort": {
+					"location": "query"
+				},
+				"filter": {
+					"location": "query"
+				}
+			}
+		},
+		"getPerson": {
+			"uri": "/api/person/{id}/",
+			"summary": "Returns a specific person.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\SingleModel",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"id": {
+					"location": "uri",
+					"required": true
+				},
+				"field_list": {
+					"location": "query"
+				}
+			}
+		},
+		"getPlatforms": {
+			"uri": "/api/platforms/",
+			"summary": "Returns a list of platforms.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\ListingModel",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"field_list": {
+					"location": "query"
+				},
+				"sort": {
+					"location": "query"
+				},
+				"filter": {
+					"location": "query"
+				}
+			}
+		},
+		"getPlatform": {
+			"uri": "/api/platform/{id}/",
+			"summary": "Returns a specific platform.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\SingleModel",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"id": {
+					"location": "uri",
+					"required": true
+				},
+				"field_list": {
+					"location": "query"
+				}
+			}
+		},
+		"getPromos": {
+			"uri": "/api/promos/",
+			"summary": "Returns a list of promos.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\ListingModel",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"field_list": {
+					"location": "query"
+				},
+				"sort": {
+					"location": "query"
+				},
+				"filter": {
+					"location": "query"
+				}
+			}
+		},
+		"getPromo": {
+			"uri": "/api/promo/{id}/",
+			"summary": "Returns a specific promo.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\SingleModel",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"id": {
+					"location": "uri",
+					"required": true
+				},
+				"field_list": {
+					"location": "query"
+				}
+			}
+		},
+		"getRatingBoards": {
+			"uri": "/api/rating_boards/",
+			"summary": "Returns a list of ratiing boards.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\ListingModel",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"field_list": {
+					"location": "query"
+				},
+				"sort": {
+					"location": "query"
+				},
+				"filter": {
+					"location": "query"
+				}
+			}
+		},
+		"getRatingBoard": {
+			"uri": "/api/rating_board/{id}/",
+			"summary": "Returns a specific rating board.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\SingleModel",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"id": {
+					"location": "uri",
+					"required": true
+				},
+				"field_list": {
+					"location": "query"
+				}
+			}
+		},
+		"getRegions": {
+			"uri": "/api/regions/",
+			"summary": "Returns a list of regions.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\ListingModel",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"field_list": {
+					"location": "query"
+				},
+				"sort": {
+					"location": "query"
+				},
+				"filter": {
+					"location": "query"
+				}
+			}
+		},
+		"getRegion": {
+			"uri": "/api/region/{id}/",
+			"summary": "Returns a specific region.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\SingleModel",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"id": {
+					"location": "uri",
+					"required": true
+				},
+				"field_list": {
+					"location": "query"
+				}
+			}
+		},
+		"getReleases": {
+			"uri": "/api/releases/",
+			"summary": "Returns a list of releases.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\ListingModel",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"field_list": {
+					"location": "query"
+				},
+				"sort": {
+					"location": "query"
+				},
+				"filter": {
+					"location": "query"
+				},
+				"platforms": {
+					"location": "query"
+				}
+			}
+		},
+		"getRelease": {
+			"uri": "/api/release/{id}/",
+			"summary": "Returns a specific release.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\SingleModel",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"id": {
+					"location": "uri",
+					"required": true
+				},
+				"field_list": {
+					"location": "query"
+				}
+			}
+		},
+		"getReviews": {
+			"uri": "/api/reviews/",
+			"summary": "Returns a list of reviews.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\ListingModel",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"field_list": {
+					"location": "query"
+				},
+				"sort": {
+					"location": "query"
+				},
+				"filter": {
+					"location": "query"
+				}
+			}
+		},
+		"getReview": {
+			"uri": "/api/review/{id}/",
+			"summary": "Returns a specific review.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\SingleModel",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"id": {
+					"location": "uri",
+					"required": true
+				},
+				"field_list": {
+					"location": "query"
+				}
+			}
+		},
+		"getThemes": {
+			"uri": "/api/themes/",
+			"summary": "Returns a list of themes.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\ListingModel",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"field_list": {
+					"location": "query"
+				},
+				"sort": {
+					"location": "query"
+				},
+				"filter": {
+					"location": "query"
+				}
+			}
+		},
+		"getTheme": {
+			"uri": "/api/theme/{id}/",
+			"summary": "Returns a specific theme.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\SingleModel",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"id": {
+					"location": "uri",
+					"required": true
+				},
+				"field_list": {
+					"location": "query"
+				}
+			}
+		},
+		"getTypes": {
+			"uri": "/api/types/",
+			"summary": "Returns a list of types.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\ListingModel",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				}
+			}
+		},
+		"getUserReviews": {
+			"uri": "/api/user_reviews/",
+			"summary": "Returns a list of user reviews.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\ListingModel",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"field_list": {
+					"location": "query"
+				},
+				"sort": {
+					"location": "query"
+				},
+				"filter": {
+					"location": "query"
+				},
+				"game": {
+					"location": "query"
+				}
+			}
+		},
+		"getUserReview": {
+			"uri": "/api/user_review/{id}/",
+			"summary": "Returns a specific user review.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\SingleModel",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"id": {
+					"location": "uri",
+					"required": true
+				},
+				"field_list": {
+					"location": "query"
+				}
+			}
+		},
+		"getVideos": {
+			"uri": "/api/videos/",
+			"summary": "Returns a list of videos.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\ListingModel",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"field_list": {
+					"location": "query"
+				},
+				"sort": {
+					"location": "query"
+				},
+				"filter": {
+					"location": "query"
+				},
+				"subscriber_only": {
+					"location": "query"
+				},
+				"video_type": {
+					"location": "query"
+				}
+			}
+		},
+		"getVideo": {
+			"uri": "/api/video/{id}/",
+			"summary": "Returns a specific video.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\SingleModel",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"id": {
+					"location": "uri",
+					"required": true
+				},
+				"field_list": {
+					"location": "query"
+				}
+			}
+		},
+		"getVideoTypes": {
+			"uri": "/api/video_types/",
+			"summary": "Returns a list of video types.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\ListingModel",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"field_list": {
+					"location": "query"
+				}
+			}
+		},
+		"getVideoType": {
+			"uri": "/api/video_type/{id}/",
+			"summary": "Returns a specific video type.",
+			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\SingleModel",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"offset": {
+					"location": "query"
+				},
+				"id": {
+					"location": "uri",
+					"required": true
+				},
+				"field_list": {
+					"location": "query"
+				}
+			}
+		},
+		"search": {
+			"uri": "/api/search/",
+			"summary": "Search for the given data.",
+			"httpMethod": "GET",
+			"parameters": {
+				"apiKey": {
+					"location": "query",
+					"required": true,
+					"static": true
+				},
+				"format": {
+					"location": "query",
+					"required": true
+				},
+				"limit": {
+					"location": "query"
+				},
+				"page": {
+					"location": "query"
+				},
+				"query": {
+					"location": "query",
+					"required": true
+				},
+				"resources": {
+					"location": "query"
+				},
+				"field_list": {
+					"location": "query"
 				}
 			}
 		}
