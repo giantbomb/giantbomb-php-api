@@ -3,8 +3,9 @@ GiantBomb.com PHP Api Wrapper
 
 #### Requirements
 
-[*] API Key from [GiantBomb][1]
-[*] [Composer][2]
+
+* API Key from [GiantBomb][1]
+* [Composer][2]
 
 
 #### Installation
@@ -62,7 +63,7 @@ if( $response->getStatusCode() === 1 ) {
 
 If you have any questions, feel free to make an issue, and I'll help you out!
 
-##### Contribution
+#### Contribution
 
 If you want to help out, just make a pull request!
 
