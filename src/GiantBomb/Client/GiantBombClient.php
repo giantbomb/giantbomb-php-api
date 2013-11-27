@@ -29,7 +29,8 @@ class GiantBombClient extends Client implements ClientInterface
 			'apiKey'  => null,
 			'format'  => 'json',
 			'limit'   => 100,
-			'offset'  => 0
+			'offset'  => 0,
+			'cache'   => null
 		);
 
 		// Validate the configuration options
@@ -40,6 +41,9 @@ class GiantBombClient extends Client implements ClientInterface
 
 		// Create the new GiantBomb Client with our Configuration
 		$client = new self( $config->get( 'baseUrl' ), $config );
+		if( $config->get( 'cache' ) !== null ) {
+			$client = new GiantBombCacheClient( $client, $config );
+		}
 
 		// Set the Service Definition from the versioned file
 		$file = 'giant-bomb-' . str_replace( '.', '_', $client->getConfig( 'version' ) ) . '.json';
