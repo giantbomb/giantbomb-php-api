@@ -33,20 +33,26 @@ class MemcachedCache extends Cache
 				'options'    => null
 			), $config
 		);
+		
+		parent::__construct( $config );
+	}
+	
+	/**
+	 * Connects to the cache (If neccessary);
+	 */
+	public function connect()
+	{
+		$memcached = new Memcached( $this->config[ 'persistent' ] ? serialize( $this->config[ 'servers' ] ) : null );
 
-		$memcached = new Memcached( $config[ 'persistent' ] ? serialize( $config[ 'servers' ] ) : null );
-
-		foreach( $config[ 'servers' ] as $server ) {
+		foreach( $this->config[ 'servers' ] as $server ) {
 			$memcached->addServer( $server[ 'host' ], $server[ 'port' ], $server[ 'weight' ] );
 		}
 
-		if( null !== $config[ 'options' ] ) {
-			$memcached->setOptions( $config[ 'options' ] );
+		if( null !== $this->config[ 'options' ] ) {
+			$memcached->setOptions( $this->config[ 'options' ] );
 		}
 
 		$this->setMemcached( $memcached );
-
-		parent::__construct( $config );
 	}
 
 	/**

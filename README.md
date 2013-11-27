@@ -29,7 +29,21 @@ require __DIR__ . '/vendor/autoload.php';
 
 use \GiantBomb\Client\GiantBombClient;
 
-$config = array( 'apiKey' => 'your-api-key' );
+$config = array( 
+	'apiKey' => 'your-api-key',
+	'cache'  => array(
+		'type'    => 'redis', // Or memcached
+		'servers' => array( array( 'host' => 'localhost', 'port' => 6397, 'timeout' => 0 ) ), // weight is also a parameter for memcached
+		'persistent' => true,
+		'timeout' => 0
+	)
+);
+/**
+Memcached also has the "options" parameter for specifiying Memcached options (via constants)
+Redis also has the "password" parameter for auth, and "dbindex" for specifying your db 
+*/
+
+
 $client = GiantBombClient::factory( $config );
 
 
@@ -46,18 +60,18 @@ $requestArgs = array(
 $response = $client->getGames( $requestArgs );
 
 if( $response->getStatusCode() === 1 ) {
-	printf( "There are %d total results. Currently showing %d, starting at %d", $response->getNumberOfTotalResults(), $response->getNumberOfPageResults(), $response->getOffset() );
-	$games = $response->getResults();
-	// HUGE dump. Careful
-	var_dump( $games );
-	
-	// Get more info on a single game
-	$game = $games[ 0 ]->getDetail()->getResult();
+    printf( "There are %d total results. Currently showing %d, starting at %d.\n<br /><br />", $response->getNumberOfTotalResults(), $response->getNumberOfPageResults(), $response->getOffset() );
+    $games = $response->getResults();
+    // HUGE dump. Careful
+    //var_dump( $games );
 
-	// All functions are magic functions based on the camel case of the key from the API result. This goes for anything returned from the API
-	echo $game->getName();
+    // Get more info on a single game
+    $game = $games->get( 0 )->getDetail()->getResults();
+
+    // All functions are magic functions based on the camel case of the key from the API result. This goes for anything returned from the API
+    printf( "Game: %s<br />", $game->getName() );
 } else {
-	printf( "There was an error: %s", $response->getError() );
+    printf( "There was an error: %s", $response->getError() );
 }
 ```
 

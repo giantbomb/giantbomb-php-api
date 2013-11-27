@@ -36,6 +36,15 @@ abstract class Cache implements CacheInterface
 	public function __construct( array $config )
 	{
 		$this->setConfig( $config );
+		$this->connect();
+	}
+
+	/**
+	 * Connects to the cache (If neccessary);
+	 */
+	public function connect()
+	{
+	
 	}
 
 	/**

@@ -82,6 +82,9 @@ class BaseEntity
 		preg_match( '/^\/api\/(?P<function>\w+)\/?(?P<arg>[0-9-]+)?\/$/', $urlInfo[ 'path' ], $matches );
 		$function = 'get' . str_replace( ' ', '', ucwords( str_replace( '_', ' ', $matches[ 'function' ] ) ) );
 
+		// Fix for cached client...
+		$this->client->getCache()->connect();
+
 		return $this->client->{$function}( array( 'id' => $matches[ 'arg' ] ) );
 	}
 

@@ -26,7 +26,7 @@ class RedisCache extends Cache
 	{
 		// Default Configs
 		$config = array_merge( array(
-				'servers'    => array( 'host' => 'localhost', 'port' => 6397, 'timeout' => 0 ),
+				'servers'    => array( array( 'host' => 'localhost', 'port' => 6379, 'timeout' => 0 ) ),
 				'timeout'    => 3600,
 				'persistent' => false,
 				'password'   => null,
@@ -34,28 +34,36 @@ class RedisCache extends Cache
 			), $config
 		);
 
+		parent::__construct( $config );
+	}
+
+	/**
+	 * Connects to the cache (If neccessary);
+	 */
+	public function connect()
+	{
 		$redis = new Redis();
+		
 		$connect = 'connect';
-		if( $config[ 'persistent' ] ) {
-			$config = 'pconnect';
+		if( $this->config[ 'persistent' ] ) {
+			$connect = 'pconnect';
 		}
-		foreach( $config[ 'servers' ] as $server ) {
+		foreach( $this->config[ 'servers' ] as $server ) {
 			$redis->{$connect}( $server[ 'host' ], $server[ 'port' ], $server[ 'timeout' ] );
 		}
 
-		if( null !== $config[ 'password' ] ) {
-			$redis->auth( $config[ 'password' ] );
+		if( null !== $this->config[ 'password' ] ) {
+			$redis->auth( $this->config[ 'password' ] );
 		}
 
-		if( null !== $config[ 'dbindex' ] ) {
-			$redis->select( $config[ 'dbindex' ] );
+		if( null !== $this->config[ 'dbindex' ] ) {
+			$redis->select( $this->config[ 'dbindex' ] );
 		}
 
 		$redis->setOption( Redis::OPT_SERIALIZER, $this->getSerializerValue() );
+		
 
 		$this->setRedis( $redis );
-
-		parent::__construct( $config );
 	}
 
 	/**

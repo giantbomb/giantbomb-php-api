@@ -7,6 +7,8 @@ use Guzzle\Service\Client;
 use Guzzle\Service\ClientInterface;
 use Guzzle\Service\Description\ServiceDescription;
 
+use GiantBomb\Cache;
+
 /**
  * Class GiantBombClient
  *
@@ -14,6 +16,11 @@ use Guzzle\Service\Description\ServiceDescription;
  */
 class GiantBombClient extends Client implements ClientInterface
 {
+	/**
+	 * @var Cache\Cache
+	 */
+	private $cache;
+	
 	/**
 	 * Factory to create new GiantBombClient instance.
 	 *
@@ -42,7 +49,7 @@ class GiantBombClient extends Client implements ClientInterface
 		// Create the new GiantBomb Client with our Configuration
 		$client = new self( $config->get( 'baseUrl' ), $config );
 		if( $config->get( 'cache' ) !== null ) {
-			$client = new GiantBombCacheClient( $client, $config );
+			$client->createCache( $config->get( 'cache' ) );
 		}
 
 		// Set the Service Definition from the versioned file
@@ -69,8 +76,6 @@ class GiantBombClient extends Client implements ClientInterface
 
 	/**
 	 * Magic method used to retrieve a command
-	 * Overriden to allow the `event_collection` parameter to passed separately
-	 * from the normal argument array.
 	 *
 	 * @param string $method Name of the command object to instantiate
 	 * @param array  $args   Arguments to pass to the command
@@ -80,15 +85,20 @@ class GiantBombClient extends Client implements ClientInterface
 	 */
 	public function __call( $method, $args = array() )
 	{
-		if ( isset( $args[ 0 ] ) && is_string( $args[ 0 ] ) ) {
-			$args[ 0 ] = array( 'event_collection' => $args[ 0 ] );
+		$args = isset( $args[ 0 ] ) ? $args[ 0 ] : array();
 
-			if ( isset( $args[ 1 ] ) && is_array( $args[ 1 ] ) ) {
-				$args[ 0 ] = array_merge( $args[ 1 ], $args[ 0 ] );
-			}
+		if( $this->cache instanceof \GiantBomb\Cache\CacheInterface ) {
+			$key = sprintf( "giant-bomb-api_%s-%s", $method, serialize( $args ) );
+			if( $content = $this->cache->fetch( $key ) ) return $content;
 		}
 
-		return $this->getCommand( $method, isset( $args[ 0 ] ) ? $args[ 0 ] : array() )->getResult();
+		$content = $this->getCommand( $method, $args )->getResult();
+
+		if( $this->cache instanceof \GiantBomb\Cache\CacheInterface ) {
+			$this->cache->save( $key, $content, $this->cache->getConfig( 'timeout', 0 ) );
+		}
+
+		return $content;
 	}
 
 
@@ -163,5 +173,36 @@ class GiantBombClient extends Client implements ClientInterface
 			if ( $option == "apiKey" && !ctype_alnum( $value ) )
 				throw new \InvalidArgumentException( "Api Key '{$value}' contains invalid characters or spaces." );
 		}
+	}
+	
+	/**
+	 * Creates the cache providers
+	 *
+	 * @param array $config Array of cache configs
+	 */
+	private function createCache( array $config )
+	{
+		switch( $config[ 'type' ] ) {
+			case 'redis':
+				if( !class_exists( '\Redis' ) ) {
+					throw new \LogicException( "Redis is required." );
+				}
+				return $this->cache = new Cache\RedisCache( $config );
+			case 'memcached':
+				if( !class_exists( '\Memcached' ) ){
+					throw new \LogicException( "Memcached is required." );
+				}
+				return $this->cache = new Cache\MemcachedCache( $config );
+			default:
+				throw new \InvalidArgumentException( sprintf( "%s is not a valid cache type. ", $config[ 'type' ] ) );
+		}
+	}
+
+	/**
+	 * @return Cache\Cache
+	 */
+	public function getCache()
+	{
+		return $this->cache;
 	}
 }
