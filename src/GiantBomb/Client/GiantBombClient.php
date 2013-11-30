@@ -212,7 +212,8 @@ class GiantBombClient extends Client implements ClientInterface
 
 				$redis->setOption( Redis::OPT_SERIALIZER, Redis::SERIALIZER_PHP );
 				$cache = new RedisCache();
-				$cache->setRedis( $redis );	
+				$cache->setRedis( $redis );
+				break;
 			case 'memcached':
 				if( !class_exists( '\Memcached' ) ){
 					throw new \LogicException( "Memcached is required." );
@@ -229,7 +230,7 @@ class GiantBombClient extends Client implements ClientInterface
 				$memcached = new Memcached( $config[ 'persistent' ] ? serialize( $config[ 'servers' ] ) : null );
 
 				foreach( $config[ 'servers' ] as $server ) {
-					$memcached->addServer( $server[ 'host' ], $server[ 'port' ], $server[ 'weight' ] );
+					$memcached->addServer( $server[ 'host' ], $server[ 'port' ], isset( $server[ 'weight' ] ) ? $server[ 'weight' ] : null );
 				}
 
 				if( null !== $config[ 'options' ] ) {
@@ -238,6 +239,7 @@ class GiantBombClient extends Client implements ClientInterface
 
 				$cache = new MemcachedCache();
 				$cache->setMemcached( $memcached );
+				break;
 			default:
 				throw new \InvalidArgumentException( sprintf( "%s is not a valid cache type. ", $config[ 'type' ] ) );
 		}
