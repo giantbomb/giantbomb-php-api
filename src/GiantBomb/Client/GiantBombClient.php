@@ -7,7 +7,15 @@ use Guzzle\Service\Client;
 use Guzzle\Service\ClientInterface;
 use Guzzle\Service\Description\ServiceDescription;
 
-use GiantBomb\Cache;
+use Redis;
+use Memcached;
+
+use Doctrine\Common\Cache\RedisCache;
+use Doctrine\Common\Cache\MemcachedCache;
+use Guzzle\Cache\DoctrineCacheAdapter;
+use Guzzle\Plugin\Cache\CachePlugin;
+use Guzzle\Plugin\Cache\DefaultCacheStorage;
+
 
 /**
  * Class GiantBombClient
@@ -16,11 +24,6 @@ use GiantBomb\Cache;
  */
 class GiantBombClient extends Client implements ClientInterface
 {
-	/**
-	 * @var Cache\Cache
-	 */
-	private $cache;
-	
 	/**
 	 * Factory to create new GiantBombClient instance.
 	 *
@@ -87,20 +90,9 @@ class GiantBombClient extends Client implements ClientInterface
 	{
 		$args = isset( $args[ 0 ] ) ? $args[ 0 ] : array();
 
-		if( $this->cache instanceof \GiantBomb\Cache\CacheInterface ) {
-			$key = sprintf( "giant-bomb-api_%s-%s", $method, md5( serialize( $args ) ) );
-			printf( "Key! %s\r\n", $key );
-			if( $response = $this->cache->fetch( $key ) ) return $response;
-		}
-
 		$command  = $this->getCommand( $method, $args );
 		$response = $command->execute();
-		$response->setArguments( $args );
-
-		if( $this->cache instanceof \GiantBomb\Cache\CacheInterface ) {
-			$this->cache->save( $key, $response, $this->cache->getConfig( 'timeout', 0 ) );
-		}
-
+		
 		return $response;
 	}
 
@@ -190,22 +182,66 @@ class GiantBombClient extends Client implements ClientInterface
 				if( !class_exists( '\Redis' ) ) {
 					throw new \LogicException( "Redis is required." );
 				}
-				return $this->cache = new Cache\RedisCache( $config );
+			
+				$redis = new Redis();
+				$config = array_merge( array(
+						'servers'    => array( array( 'host' => 'localhost', 'port' => 6379, 'timeout' => 0 ) ),
+						'timeout'    => 3600,
+						'persistent' => false,
+						'password'   => null,
+						'dbindex'    => null,
+					), $config
+				);
+				
+				$connect = 'connect';
+				if( $config[ 'persistent' ] ) {
+					$connect = 'pconnect';
+				}
+		
+				foreach( $config[ 'servers' ] as $server ) {
+					$redis->{$connect}( $server[ 'host' ], $server[ 'port' ], $server[ 'timeout' ] );
+				}
+
+				if( null !== $config[ 'password' ] ) {
+					$redis->auth( $config[ 'password' ] );
+				}
+
+				if( null !== $config[ 'dbindex' ] ) {
+					$redis->select( $config[ 'dbindex' ] );
+				}
+
+				$redis->setOption( Redis::OPT_SERIALIZER, Redis::SERIALIZER_PHP );
+				$cache = new RedisCache();
+				$cache->setRedis( $redis );	
 			case 'memcached':
 				if( !class_exists( '\Memcached' ) ){
 					throw new \LogicException( "Memcached is required." );
 				}
-				return $this->cache = new Cache\MemcachedCache( $config );
+	
+				$config = array_merge( array(
+						'servers'    => array( 'host' => 'localhost', 'port' => 11211, 'weight' => 100 ),
+						'timeout'    => 3600,
+						'persistent' => false,
+						'options'    => null
+					), $config
+				);
+				
+				$memcached = new Memcached( $config[ 'persistent' ] ? serialize( $config[ 'servers' ] ) : null );
+
+				foreach( $config[ 'servers' ] as $server ) {
+					$memcached->addServer( $server[ 'host' ], $server[ 'port' ], $server[ 'weight' ] );
+				}
+
+				if( null !== $config[ 'options' ] ) {
+					$memcached->setOptions( $config[ 'options' ] );
+				}
+
+				$cache = new MemcachedCache();
+				$cache->setMemcached( $memcached );
 			default:
 				throw new \InvalidArgumentException( sprintf( "%s is not a valid cache type. ", $config[ 'type' ] ) );
 		}
-	}
-
-	/**
-	 * @return Cache\Cache
-	 */
-	public function getCache()
-	{
-		return $this->cache;
+		$plugin = new CachePlugin( array( 'storage' => new DefaultCacheStorage(	new DoctrineCacheAdapter( $cache ) ) ) );
+		$this->addSubscriber( $plugin );
 	}
 }
