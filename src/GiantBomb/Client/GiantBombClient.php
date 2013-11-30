@@ -186,7 +186,6 @@ class GiantBombClient extends Client implements ClientInterface
 				$redis = new Redis();
 				$config = array_merge( array(
 						'servers'    => array( array( 'host' => 'localhost', 'port' => 6379, 'timeout' => 0 ) ),
-						'timeout'    => 3600,
 						'persistent' => false,
 						'password'   => null,
 						'dbindex'    => null,
@@ -221,7 +220,6 @@ class GiantBombClient extends Client implements ClientInterface
 	
 				$config = array_merge( array(
 						'servers'    => array( 'host' => 'localhost', 'port' => 11211, 'weight' => 100 ),
-						'timeout'    => 3600,
 						'persistent' => false,
 						'options'    => null
 					), $config

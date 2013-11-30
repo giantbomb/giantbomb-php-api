@@ -34,8 +34,7 @@ $config = array(
 	'cache'  => array(
 		'type'    => 'redis', // Or memcached
 		'servers' => array( array( 'host' => 'localhost', 'port' => 6397, 'timeout' => 0 ) ), // weight is also a parameter for memcached
-		'persistent' => true,
-		'timeout' => 0
+		'persistent' => true
 	)
 );
 /**
