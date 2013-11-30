@@ -83,8 +83,12 @@ class BaseEntity
 		$function = 'get' . str_replace( ' ', '', ucwords( str_replace( '_', ' ', $matches[ 'function' ] ) ) );
 
 		// Fix for cached client...
-		$this->client->getCache()->connect();
-
+		if( null !== $this->client->getCache() ) {
+			try {
+				$this->client->getCache()->connect();
+			} catch( \Exception $e ) {}
+		}
+	
 		return $this->client->{$function}( array( 'id' => $matches[ 'arg' ] ) );
 	}
 

@@ -14,11 +14,20 @@ use GiantBomb\Client\GiantBombClient;
 
 class GiantBombModel implements ResponseClassInterface
 {
-
 	/**
 	 * @var GiantBombClient
 	 */
 	protected $client;
+
+	/**
+	 * @var string
+	 */
+	protected $commandName;
+
+	/**
+	 * @var array
+	 */
+	protected $arguments;
 
 	/**
 	 * @var string A text string representing the status_code
@@ -68,13 +77,14 @@ class GiantBombModel implements ResponseClassInterface
 	/**
 	 * Constructor
 	 *
-	 * @param GiantBombClient $client Client that made the request
-	 * @param array $data Data from the request
+	 * @param OperationCommand $command
 	 */
-	public function __construct( $client, $data )
+	public function __construct( OperationCommand $command )
 	{
-		$this->setClient( $client );
+		$this->setClient( $command->getClient() );
+		$this->setCommandName( $command->getName() );
 
+		$data = $command->getResponse()->json();
 		foreach( $data as $key => $value ) {
 			$setter = 'set' . str_replace( ' ', '', ucwords( str_replace( '_', ' ', $key ) ) );
 			if( method_exists( $this, $setter ) ) {
@@ -92,10 +102,7 @@ class GiantBombModel implements ResponseClassInterface
 	 */
 	public static function fromCommand( OperationCommand $command )
 	{
-		$data = $command->getResponse()->getBody( );
-		$data = json_decode( $data, true );
-
-		return new self( $command->getClient(), $data );
+		return new self( $command );
 	}
 
 	/**
@@ -112,6 +119,38 @@ class GiantBombModel implements ResponseClassInterface
 	public function getClient()
 	{
 		return $this->client;
+	}
+
+	/**
+	 * @param string
+	 */
+	public function setCommandName( $commandName )
+	{
+		$this->commandName = $commandName;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getCommandName( )
+	{
+		return $this->commandName;
+	}
+
+	/**
+	 * @param array $arguments
+	 */
+	public function setArguments( array $arguments )
+	{
+		$this->arguments = $arguments;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getArguments()
+	{
+		return $this->arguments;
 	}
 
 	/**

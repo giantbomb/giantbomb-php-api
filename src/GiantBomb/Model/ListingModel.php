@@ -12,12 +12,12 @@ use GiantBomb\Entity\BaseEntity;
 
 class ListingModel extends GiantBombModel
 {
+
+	private static $position = null;
+
 	public static function fromCommand( OperationCommand $command )
 	{
-		$data = $command->getResponse()->getBody( );
-		$data = json_decode( $data, true );
-
-		return new self( $command->getClient(), $data );
+		return new self( $command );
 	}
 
 	public function setResults( array $results )
@@ -27,7 +27,41 @@ class ListingModel extends GiantBombModel
 			$coll->set( $key, new BaseEntity( $this->getClient(), $result ) );
 		}
 
-
 		parent::setResults( $coll );
+	}
+
+	public function hasMoreResults()
+	{
+		// If the status failed, return false.
+		if( $this->getStatusCode() !== 1 ) return false;
+		
+		// If there are more total results than the current max, return true
+		if( $this->getNumberOfTotalResults() > $this->getLimit() + $this->getOffset() ) return true;
+		
+		// Fallback false
+		return false;	
+	}
+	
+	public function getMoreResults()
+	{
+		if( !$this->hasMoreResults() ) return false;
+
+		if( static::$position === null ) static::$position = $this->getOffset();
+
+		$args = $this->getArguments();
+		$args[ 'offset' ] = static::$position += $this->getLimit();
+		$args[ 'limit' ]  = $this->getLimit();
+	
+		printf( "Offset: %d\tLimit: %d\r\n\r\n\r\n", $args[ 'offset' ], $args[ 'limit' ] );
+	
+		$response = $this->getClient()->{$this->getCommandName()}( $args );
+		if( $response->getStatusCode() !== 1 ) return false;
+		
+		$results = $response->getResults();
+		foreach( $results as $result ) {
+			$this->getResults()->insert( $result );
+		}
+
+		return true;
 	}
 }

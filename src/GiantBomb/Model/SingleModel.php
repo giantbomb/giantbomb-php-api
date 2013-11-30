@@ -14,10 +14,7 @@ class SingleModel extends GiantBombModel
 {
 	public static function fromCommand( OperationCommand $command )
 	{
-		$data = $command->getResponse()->getBody( );
-		$data = json_decode( $data, true );
-
-		return new self( $command->getClient(), $data );
+		return new self( $command );
 	}
 
 	public function setResults( array $results )

@@ -88,17 +88,20 @@ class GiantBombClient extends Client implements ClientInterface
 		$args = isset( $args[ 0 ] ) ? $args[ 0 ] : array();
 
 		if( $this->cache instanceof \GiantBomb\Cache\CacheInterface ) {
-			$key = sprintf( "giant-bomb-api_%s-%s", $method, serialize( $args ) );
-			if( $content = $this->cache->fetch( $key ) ) return $content;
+			$key = sprintf( "giant-bomb-api_%s-%s", $method, md5( serialize( $args ) ) );
+			printf( "Key! %s\r\n", $key );
+			if( $response = $this->cache->fetch( $key ) ) return $response;
 		}
 
-		$content = $this->getCommand( $method, $args )->getResult();
+		$command  = $this->getCommand( $method, $args );
+		$response = $command->execute();
+		$response->setArguments( $args );
 
 		if( $this->cache instanceof \GiantBomb\Cache\CacheInterface ) {
-			$this->cache->save( $key, $content, $this->cache->getConfig( 'timeout', 0 ) );
+			$this->cache->save( $key, $response, $this->cache->getConfig( 'timeout', 0 ) );
 		}
 
-		return $content;
+		return $response;
 	}
 
 

@@ -69,6 +69,18 @@ class Collection implements \IteratorAggregate, \Countable
 	}
 
 	/**
+	 * Inserts Data data.
+	 *
+	 * @param mixed $data
+	 *
+	 * @api
+	 */
+	public function insert( $data )
+	{
+		$this->data[] = $data;
+	}
+
+	/**
 	 * Returns a data by name.
 	 *
 	 * @param string  $path    The key
