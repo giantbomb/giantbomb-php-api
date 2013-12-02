@@ -83,3 +83,7 @@ If you want to help out, just make a pull request!
 [1]: http://api.giantbomb.com/
 [2]: http://www.getcomposer.org/
 [3]: https://github.com/giantbomb/giantbomb-php-api/blob/master/src/GiantBomb/Resources/config/giant-bomb-1_0.json
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/giantbomb/giantbomb-php-api/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
