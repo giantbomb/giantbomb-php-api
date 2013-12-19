@@ -52,8 +52,6 @@ class ListingModel extends GiantBombModel
 		$args[ 'offset' ] = static::$position += $this->getLimit();
 		$args[ 'limit' ]  = $this->getLimit();
 	
-		printf( "Offset: %d\tLimit: %d\r\n\r\n\r\n", $args[ 'offset' ], $args[ 'limit' ] );
-	
 		$response = $this->getClient()->{$this->getCommandName()}( $args );
 		if( $response->getStatusCode() !== 1 ) return false;
 		
