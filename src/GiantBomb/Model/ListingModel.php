@@ -20,7 +20,7 @@ class ListingModel extends GiantBombModel
 		return new self( $command );
 	}
 
-	public function setResults( array $results )
+	public function setResults(  $results )
 	{
 		$coll = new Collection( );
 		foreach( $results as $key => $result ) {
