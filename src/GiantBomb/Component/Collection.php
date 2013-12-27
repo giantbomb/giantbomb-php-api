@@ -304,5 +304,21 @@ class Collection implements \IteratorAggregate, \Countable
 	public function count()
 	{
 		return count( $this->data );
-	}
+    }
+
+    /**
+     * Shift an element off the beginning of the collection
+     */
+    public function shift()
+    {
+        return array_shift( $this->data );
+    }
+
+    /**
+     * Pop an element off the end of the collection
+     */
+    public function pop()
+    {
+        return array_pop( $this->data );
+    }
 } 
