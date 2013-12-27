@@ -17,7 +17,7 @@ class SingleModel extends GiantBombModel
 		return new self( $command );
 	}
 
-	public function setResults( array $results )
+	public function setResults( $results )
 	{
 		parent::setResults( new BaseEntity( $this->getClient(), $results ) );
 	}
