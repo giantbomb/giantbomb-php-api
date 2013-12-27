@@ -107,5 +107,13 @@ class BaseEntity
 	public function hasApiDetailUrl()
 	{
 		return !empty( $this->apiDetailUrl );
-	}
+    }
+
+    /**
+     * Return data in an array
+     */
+    public function toArray()
+    {
+        return $this->data;
+    }
 } 
