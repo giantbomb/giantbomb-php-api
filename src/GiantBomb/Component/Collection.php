@@ -1,9 +1,4 @@
 <?php
-/**
- * @author    Aaron Scherer
- * @date      11/22/13
- * @copyright Underground Elephant
- */
 
 namespace GiantBomb\Component;
 
