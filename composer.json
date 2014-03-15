@@ -9,7 +9,7 @@
     "require": {
         "php": ">=5.3.3",
         "guzzle/guzzle": "~3.7",
-        "doctrine/cache": "1.3.*"
+        "doctrine/cache": "~1.3"
     },
     "require-dev": {
         "phpunit/phpunit": "*"
