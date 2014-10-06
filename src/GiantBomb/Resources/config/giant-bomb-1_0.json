@@ -1388,6 +1388,7 @@
 			"uri": "/api/search/",
 			"summary": "Search for the given data.",
 			"httpMethod": "GET",
+			"responseClass": "\\GiantBomb\\Model\\ListingModel",
 			"parameters": {
 				"apiKey": {
 					"location": "query",
